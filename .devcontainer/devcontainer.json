@@ -6,7 +6,7 @@
 			"label": "Wrangler"
 		}
 	},
-	"postCreateCommand": "npm install",
+	"postCreateCommand": "npm ci",
 	"customizations": {
 		"vscode": {
 			"extensions": ["biomejs.biome"]
