@@ -3,6 +3,9 @@
 	"main": "src/server.js",
 	"compatibility_date": "2026-01-28",
 	"compatibility_flags": ["nodejs_compat"],
+	"observability": {
+		"enabled": true
+	},
 	"browser": {
 		"binding": "BROWSER"
 	},
