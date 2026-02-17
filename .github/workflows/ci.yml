@@ -6,17 +6,16 @@ on:
 
 permissions:
   contents: read
-  security-events: write
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
-      - run: npm ci
-      - run: npx biome ci --reporter=github --reporter=sarif --reporter-file=biome-results.sarif
-      - uses: github/codeql-action/upload-sarif@v4
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup Biome
+        uses: biomejs/setup-biome@v2
         with:
-          sarif_file: biome-results.sarif
-          wait-for-processing: true
+          version: latest
+      - name: Run Biome
+        run: biome ci . --reporter=github
