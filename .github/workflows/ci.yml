@@ -17,7 +17,9 @@ jobs:
       - run: npm ci
       - run: npx biome ci --reporter=github --reporter=sarif --reporter-file=biome-results.sarif
         continue-on-error: true
+        working-directory: ${{ github.workspace }}
       - uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: biome-results.sarif
           wait-for-processing: true
+          checkout_path: ${{ github.workspace }}
