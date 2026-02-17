@@ -13,9 +13,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      - name: Setup Biome
-        uses: biomejs/setup-biome@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          version: latest
+          node-version: 22
+      - name: Install dependencies
+        run: npm ci
       - name: Run Biome
         run: biome ci . --reporter=github
