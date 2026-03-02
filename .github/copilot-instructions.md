@@ -1357,3 +1357,7 @@ async webSocketError(ws: WebSocket, error: unknown): void | Promise<void> {
 </implementation>
 </pattern>
 </api_patterns>
+
+<user_prompt>
+{user_prompt}
+</user_prompt>
