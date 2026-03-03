@@ -48,7 +48,11 @@ async function generateMessageScreenshot(interaction, env) {
 	await page.evaluate((interaction) => {
 		const targetId = interaction.data.target_id;
 		const message = interaction.data.resolved.messages[targetId];
-		const member = interaction.data.resolved.members?.[message.author.id];
+		const member =
+			interaction.data.resolved.members?.[message.author.id] ??
+			(interaction.member?.user?.id === message.author.id
+				? interaction.member
+				: undefined);
 		const guildId = interaction.guild_id;
 		const author = message.author;
 		const username = member?.nick || author.global_name || author.username;
