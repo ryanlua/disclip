@@ -11,11 +11,12 @@ import { CLIP_COMPONENT, ERROR_COMPONENT } from './components.js';
  * Generate a message screenshot from a Discord message.
  * @param {import('discord-api-types/v10').APIMessage} message - The Discord message object.
  * @param {*} env - The environment variables.
- * @param {import('discord-api-types/v10').APIInteractionGuildMember} [member] - The guild member object for server profile overrides.
- * @param {string} [guildId] - The guild ID, required to construct server-specific avatar URLs.
+ * @param {import('discord-api-types/v10').APIInteraction} [interaction] - The interaction object, used to resolve server profile overrides.
  * @returns {Promise<Buffer>} - The screenshot image buffer.
  */
-async function generateMessageScreenshot(message, env, member, guildId) {
+async function generateMessageScreenshot(message, env, interaction) {
+	const member = interaction?.data?.resolved?.members?.[message.author.id];
+	const guildId = interaction?.guild_id;
 	// Pick random session from open sessions
 	let sessionId = await getRandomSession(env.BROWSER);
 	let browser;
@@ -192,12 +193,10 @@ export async function generateMessageClip(interaction, env) {
 	try {
 		const targetId = interaction.data.target_id;
 		const targetMessage = interaction.data.resolved.messages[targetId];
-		const member = interaction.data.resolved.members?.[targetMessage.author.id];
 		const image = await generateMessageScreenshot(
 			targetMessage,
 			env,
-			member,
-			interaction.guild_id,
+			interaction,
 		);
 		const messageUrl = `https://discord.com/channels/${interaction.guild_id || '@me'}/${targetMessage.channel_id}/${targetMessage.id}`;
 
