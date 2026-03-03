@@ -39,126 +39,123 @@ async function generateMessageScreenshot(interaction, env) {
 
 	// Generate the screenshot
 	const page = await browser.newPage();
-	await page.setContent(index);
-	await page.addStyleTag({ content: style });
-	await page.addScriptTag({
-		url: 'https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js',
-	});
-
-	await page.evaluate((interaction) => {
-		const targetId = interaction.data.target_id;
-		const message = interaction.data.resolved.messages[targetId];
-		const member =
-			interaction.data.resolved.members?.[message.author.id] ??
-			(interaction.member?.user?.id === message.author.id
-				? interaction.member
-				: undefined);
-		const author = message.author;
-		const username = member?.nick || author.global_name || author.username;
-		const defaultUserAvatarIndex = author.discriminator
-			? Number(author.discriminator) % 5 // Legacy username system
-			: (BigInt(author.id) >> 22n) % 6n; // New username system
-		const userAvatar =
-			member?.avatar && interaction.guild_id
-				? `https://cdn.discordapp.com/guilds/${interaction.guild_id}/users/${author.id}/avatars/${member.avatar}.webp`
-				: author.avatar
-					? `https://cdn.discordapp.com/avatars/${author.id}/${author.avatar}.webp`
-					: `https://cdn.discordapp.com/embed/avatars/${defaultUserAvatarIndex}.png`;
-		const avatarDecorationData =
-			member?.avatar_decoration_data || author.avatar_decoration_data;
-		const avatarDecoration = avatarDecorationData
-			? `https://cdn.discordapp.com/avatar-decoration-presets/${avatarDecorationData.asset}.png?passthrough=false`
-			: '';
-		const serverTag = author.clan?.tag || '';
-		const serverTagBadge = author.clan
-			? `https://cdn.discordapp.com/guild-tag-badges/${author.clan.identity_guild_id}/${author.clan.badge}.webp`
-			: '';
-		const botTag = author.bot;
-
-		// TODO: Move this parsing to a separate function/module
-		// Parse message content and replace markdown with HTML
-		const messageContent = message.content
-			.replace(
-				/<a?:([^:>]+):(\d+)>/g,
-				'<img src="https://cdn.discordapp.com/emojis/$2.webp" alt="$1" class="emoji">',
-			) // custom emojis
-			.replace(/^### (.+)$/gm, '<h3>$1</h3>') // ### header 3
-			.replace(/^## (.+)$/gm, '<h2>$1</h2>') // ## header 2
-			.replace(/^# (.+)$/gm, '<h1>$1</h1>') // # header 1
-			.replace(/^-# (.+)$/gm, '<small>$1</small>') // -# subtext
-			.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>') // > blockquote
-			.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>') // [text](url)
-			.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // **bold**
-			.replace(/__(.+?)__/g, '<u>$1</u>') // __underline__
-			.replace(/(\*|_)(.+?)\1/g, '<em>$2</em>') // *italic* or _italic_
-			.replace(/\|\|(.+?)\|\|/g, '<span class="spoiler">$1</span>') // ||spoiler||
-			.replace(/~~(.+?)~~/g, '<del>$1</del>') // ~~strikethrough~~
-			.replace(/```([^`]+?)```/g, '<pre>$1</pre>') // ```code block```
-			.replace(/`([^`]+)`/g, '<code>$1</code>') // `inline code`
-			.replace(/\n/g, '<br>'); // change \n to <br> for line breaks
-
-		const avatarElement = document.querySelector('.avatar');
-		avatarElement.setAttribute('src', userAvatar);
-
-		const avatarDecorationElement =
-			document.querySelector('.avatar-decoration');
-		avatarDecorationElement.setAttribute('src', avatarDecoration);
-
-		const usernameElement = document.querySelector('.username');
-		usernameElement.firstChild.textContent = username;
-
-		const serverTagElement = document.getElementById('server-tag');
-		if (serverTag) {
-			serverTagElement.querySelector('span').textContent = serverTag;
-			serverTagElement.querySelector('img').setAttribute('src', serverTagBadge);
-		} else {
-			serverTagElement.style.display = 'none';
-		}
-
-		const botTagElement = document.getElementById('bot-tag');
-		if (!botTag) {
-			botTagElement.style.display = 'none';
-		}
-
-		// Set message element
-		const messageElement = document.querySelector('.message');
-		messageElement.innerHTML = messageContent;
-
-		// Parse message element with Twemoji
-		const twemoji = window.twemoji;
-		twemoji.parse(messageElement, {
-			folder: 'svg',
-			ext: '.svg',
+	try {
+		await page.setContent(index);
+		await page.addStyleTag({ content: style });
+		await page.addScriptTag({
+			url: 'https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js',
 		});
-	}, interaction);
 
-	// Wait for images to load
-	await page.waitForNetworkIdle();
+		await page.evaluate((interaction) => {
+			const targetId = interaction.data.target_id;
+			const message = interaction.data.resolved.messages[targetId];
+			const member =
+				interaction.data.resolved.members?.[message.author.id] ??
+				(interaction.member?.user?.id === message.author.id
+					? interaction.member
+					: undefined);
+			const author = message.author;
+			const username = member?.nick || author.global_name || author.username;
+			const defaultUserAvatarIndex = author.discriminator
+				? Number(author.discriminator) % 5 // Legacy username system
+				: (BigInt(author.id) >> 22n) % 6n; // New username system
+			const userAvatar =
+				member?.avatar && interaction.guild_id
+					? `https://cdn.discordapp.com/guilds/${interaction.guild_id}/users/${author.id}/avatars/${member.avatar}.webp`
+					: author.avatar
+						? `https://cdn.discordapp.com/avatars/${author.id}/${author.avatar}.webp`
+						: `https://cdn.discordapp.com/embed/avatars/${defaultUserAvatarIndex}.png`;
+			const avatarDecorationData =
+				member?.avatar_decoration_data || author.avatar_decoration_data;
+			const avatarDecoration = avatarDecorationData
+				? `https://cdn.discordapp.com/avatar-decoration-presets/${avatarDecorationData.asset}.png?passthrough=false`
+				: '';
+			const serverTag = author.clan?.tag || '';
+			const serverTagBadge = author.clan
+				? `https://cdn.discordapp.com/guild-tag-badges/${author.clan.identity_guild_id}/${author.clan.badge}.webp`
+				: '';
+			const botTag = author.bot;
 
-	// Set the viewport size based on the card element
-	const cardElement = await page.$('.card');
-	const cardBoundingBox = await cardElement.boundingBox();
-	await page.setViewport({
-		width: Math.ceil(cardBoundingBox.width + 200),
-		height: Math.ceil(cardBoundingBox.height + 200),
-		deviceScaleFactor: 2,
-	});
+			// TODO: Move this parsing to a separate function/module
+			// Parse message content and replace markdown with HTML
+			const messageContent = message.content
+				.replace(
+					/<a?:([^:>]+):(\d+)>/g,
+					'<img src="https://cdn.discordapp.com/emojis/$2.webp" alt="$1" class="emoji">',
+				) // custom emojis
+				.replace(/^### (.+)$/gm, '<h3>$1</h3>') // ### header 3
+				.replace(/^## (.+)$/gm, '<h2>$1</h2>') // ## header 2
+				.replace(/^# (.+)$/gm, '<h1>$1</h1>') // # header 1
+				.replace(/^-# (.+)$/gm, '<small>$1</small>') // -# subtext
+				.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>') // > blockquote
+				.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>') // [text](url)
+				.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // **bold**
+				.replace(/__(.+?)__/g, '<u>$1</u>') // __underline__
+				.replace(/(\*|_)(.+?)\1/g, '<em>$2</em>') // *italic* or _italic_
+				.replace(/\|\|(.+?)\|\|/g, '<span class="spoiler">$1</span>') // ||spoiler||
+				.replace(/~~(.+?)~~/g, '<del>$1</del>') // ~~strikethrough~~
+				.replace(/```([^`]+?)```/g, '<pre>$1</pre>') // ```code block```
+				.replace(/`([^`]+)`/g, '<code>$1</code>') // `inline code`
+				.replace(/\n/g, '<br>'); // change \n to <br> for line breaks
 
-	const screenshot = await page.screenshot({
-		optimizeForSpeed: true,
-	});
+			const avatarElement = document.querySelector('.avatar');
+			avatarElement.setAttribute('src', userAvatar);
 
-	// All work done, so free connection (IMPORTANT!)
+			const avatarDecorationElement =
+				document.querySelector('.avatar-decoration');
+			avatarDecorationElement.setAttribute('src', avatarDecoration);
 
-	// Close browser immediately
-	// Reduces browser time, but increases new browser instances, and response time
-	// browser.close();
+			const usernameElement = document.querySelector('.username');
+			usernameElement.firstChild.textContent = username;
 
-	// Disconnect to allow reuse of the session
-	// Reduces new browser instances and response time, but increases browser hours
-	browser.disconnect();
+			const serverTagElement = document.getElementById('server-tag');
+			if (serverTag) {
+				serverTagElement.querySelector('span').textContent = serverTag;
+				serverTagElement.querySelector('img').setAttribute('src', serverTagBadge);
+			} else {
+				serverTagElement.style.display = 'none';
+			}
 
-	return screenshot;
+			const botTagElement = document.getElementById('bot-tag');
+			if (!botTag) {
+				botTagElement.style.display = 'none';
+			}
+
+			// Set message element
+			const messageElement = document.querySelector('.message');
+			messageElement.innerHTML = messageContent;
+
+			// Parse message element with Twemoji
+			const twemoji = window.twemoji;
+			twemoji.parse(messageElement, {
+				folder: 'svg',
+				ext: '.svg',
+			});
+		}, interaction);
+
+		// Wait for images to load
+		await page.waitForNetworkIdle();
+
+		// Set the viewport size based on the card element
+		const cardElement = await page.$('.card');
+		const cardBoundingBox = await cardElement.boundingBox();
+		await page.setViewport({
+			width: Math.ceil(cardBoundingBox.width + 200),
+			height: Math.ceil(cardBoundingBox.height + 200),
+			deviceScaleFactor: 2,
+		});
+
+		return await page.screenshot({
+			optimizeForSpeed: true,
+		});
+	} finally {
+		// Always close the page and disconnect, even if an error occurs
+		await page.close().catch((err) => console.warn('Failed to close page:', err));
+
+		// Disconnect to allow reuse of the session
+		// Reduces new browser instances and response time, but increases browser hours
+		browser.disconnect();
+	}
 }
 
 /**
