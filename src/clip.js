@@ -14,10 +14,6 @@ import { CLIP_COMPONENT, ERROR_COMPONENT } from './components.js';
  * @returns {Promise<Buffer>} - The screenshot image buffer.
  */
 async function generateMessageScreenshot(interaction, env) {
-	const targetId = interaction.data.target_id;
-	const message = interaction.data.resolved.messages[targetId];
-	const member = interaction.data.resolved.members?.[message.author.id];
-	const guildId = interaction.guild_id;
 	// Pick random session from open sessions
 	let sessionId = await getRandomSession(env.BROWSER);
 	let browser;
@@ -49,92 +45,89 @@ async function generateMessageScreenshot(interaction, env) {
 		url: 'https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js',
 	});
 
-	await page.evaluate(
-		(message, member, guildId) => {
-			const author = message.author;
-			const username = member?.nick || author.global_name || author.username;
-			const defaultUserAvatarIndex = author.discriminator
-				? Number(author.discriminator) % 5 // Legacy username system
-				: (BigInt(author.id) >> 22n) % 6n; // New username system
-			const userAvatar =
-				member?.avatar && guildId
-					? `https://cdn.discordapp.com/guilds/${guildId}/users/${author.id}/avatars/${member.avatar}.webp`
-					: author.avatar
-						? `https://cdn.discordapp.com/avatars/${author.id}/${author.avatar}.webp`
-						: `https://cdn.discordapp.com/embed/avatars/${defaultUserAvatarIndex}.png`;
-			const effectiveAvatarDecoration =
-				member?.avatar_decoration_data || author.avatar_decoration_data;
-			const avatarDecoration = effectiveAvatarDecoration
-				? `https://cdn.discordapp.com/avatar-decoration-presets/${effectiveAvatarDecoration.asset}.png?passthrough=false`
-				: '';
-			const serverTag = author.clan?.tag || '';
-			const serverTagBadge = author.clan
-				? `https://cdn.discordapp.com/guild-tag-badges/${author.clan.identity_guild_id}/${author.clan.badge}.webp`
-				: '';
-			const botTag = author.bot;
+	await page.evaluate((interaction) => {
+		const targetId = interaction.data.target_id;
+		const message = interaction.data.resolved.messages[targetId];
+		const member = interaction.data.resolved.members?.[message.author.id];
+		const guildId = interaction.guild_id;
+		const author = message.author;
+		const username = member?.nick || author.global_name || author.username;
+		const defaultUserAvatarIndex = author.discriminator
+			? Number(author.discriminator) % 5 // Legacy username system
+			: (BigInt(author.id) >> 22n) % 6n; // New username system
+		const userAvatar =
+			member?.avatar && guildId
+				? `https://cdn.discordapp.com/guilds/${guildId}/users/${author.id}/avatars/${member.avatar}.webp`
+				: author.avatar
+					? `https://cdn.discordapp.com/avatars/${author.id}/${author.avatar}.webp`
+					: `https://cdn.discordapp.com/embed/avatars/${defaultUserAvatarIndex}.png`;
+		const effectiveAvatarDecoration =
+			member?.avatar_decoration_data || author.avatar_decoration_data;
+		const avatarDecoration = effectiveAvatarDecoration
+			? `https://cdn.discordapp.com/avatar-decoration-presets/${effectiveAvatarDecoration.asset}.png?passthrough=false`
+			: '';
+		const serverTag = author.clan?.tag || '';
+		const serverTagBadge = author.clan
+			? `https://cdn.discordapp.com/guild-tag-badges/${author.clan.identity_guild_id}/${author.clan.badge}.webp`
+			: '';
+		const botTag = author.bot;
 
-			// TODO: Move this parsing to a separate function/module
-			// Parse message content and replace markdown with HTML
-			const messageContent = message.content
-				.replace(
-					/<a?:([^:>]+):(\d+)>/g,
-					'<img src="https://cdn.discordapp.com/emojis/$2.webp" alt="$1" class="emoji">',
-				) // custom emojis
-				.replace(/^### (.+)$/gm, '<h3>$1</h3>') // ### header 3
-				.replace(/^## (.+)$/gm, '<h2>$1</h2>') // ## header 2
-				.replace(/^# (.+)$/gm, '<h1>$1</h1>') // # header 1
-				.replace(/^-# (.+)$/gm, '<small>$1</small>') // -# subtext
-				.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>') // > blockquote
-				.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>') // [text](url)
-				.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // **bold**
-				.replace(/__(.+?)__/g, '<u>$1</u>') // __underline__
-				.replace(/(\*|_)(.+?)\1/g, '<em>$2</em>') // *italic* or _italic_
-				.replace(/\|\|(.+?)\|\|/g, '<span class="spoiler">$1</span>') // ||spoiler||
-				.replace(/~~(.+?)~~/g, '<del>$1</del>') // ~~strikethrough~~
-				.replace(/```([^`]+?)```/g, '<pre>$1</pre>') // ```code block```
-				.replace(/`([^`]+)`/g, '<code>$1</code>') // `inline code`
-				.replace(/\n/g, '<br>'); // change \n to <br> for line breaks
+		// TODO: Move this parsing to a separate function/module
+		// Parse message content and replace markdown with HTML
+		const messageContent = message.content
+			.replace(
+				/<a?:([^:>]+):(\d+)>/g,
+				'<img src="https://cdn.discordapp.com/emojis/$2.webp" alt="$1" class="emoji">',
+			) // custom emojis
+			.replace(/^### (.+)$/gm, '<h3>$1</h3>') // ### header 3
+			.replace(/^## (.+)$/gm, '<h2>$1</h2>') // ## header 2
+			.replace(/^# (.+)$/gm, '<h1>$1</h1>') // # header 1
+			.replace(/^-# (.+)$/gm, '<small>$1</small>') // -# subtext
+			.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>') // > blockquote
+			.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>') // [text](url)
+			.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // **bold**
+			.replace(/__(.+?)__/g, '<u>$1</u>') // __underline__
+			.replace(/(\*|_)(.+?)\1/g, '<em>$2</em>') // *italic* or _italic_
+			.replace(/\|\|(.+?)\|\|/g, '<span class="spoiler">$1</span>') // ||spoiler||
+			.replace(/~~(.+?)~~/g, '<del>$1</del>') // ~~strikethrough~~
+			.replace(/```([^`]+?)```/g, '<pre>$1</pre>') // ```code block```
+			.replace(/`([^`]+)`/g, '<code>$1</code>') // `inline code`
+			.replace(/\n/g, '<br>'); // change \n to <br> for line breaks
 
-			const avatarElement = document.querySelector('.avatar');
-			avatarElement.setAttribute('src', userAvatar);
+		const avatarElement = document.querySelector('.avatar');
+		avatarElement.setAttribute('src', userAvatar);
 
-			const avatarDecorationElement =
-				document.querySelector('.avatar-decoration');
-			avatarDecorationElement.setAttribute('src', avatarDecoration);
+		const avatarDecorationElement =
+			document.querySelector('.avatar-decoration');
+		avatarDecorationElement.setAttribute('src', avatarDecoration);
 
-			const usernameElement = document.querySelector('.username');
-			usernameElement.firstChild.textContent = username;
+		const usernameElement = document.querySelector('.username');
+		usernameElement.firstChild.textContent = username;
 
-			const serverTagElement = document.getElementById('server-tag');
-			if (serverTag) {
-				serverTagElement.querySelector('span').textContent = serverTag;
-				serverTagElement
-					.querySelector('img')
-					.setAttribute('src', serverTagBadge);
-			} else {
-				serverTagElement.style.display = 'none';
-			}
+		const serverTagElement = document.getElementById('server-tag');
+		if (serverTag) {
+			serverTagElement.querySelector('span').textContent = serverTag;
+			serverTagElement.querySelector('img').setAttribute('src', serverTagBadge);
+		} else {
+			serverTagElement.style.display = 'none';
+		}
 
-			const botTagElement = document.getElementById('bot-tag');
-			if (!botTag) {
-				botTagElement.style.display = 'none';
-			}
+		const botTagElement = document.getElementById('bot-tag');
+		if (!botTag) {
+			botTagElement.style.display = 'none';
+		}
 
-			// Set message element
-			const messageElement = document.querySelector('.message');
-			messageElement.innerHTML = messageContent;
+		// Set message element
+		const messageElement = document.querySelector('.message');
+		messageElement.innerHTML = messageContent;
 
-			// Parse message element with Twemoji
-			const twemoji = window.twemoji;
-			twemoji.parse(messageElement, {
-				folder: 'svg',
-				ext: '.svg',
-			});
-		},
-		message,
-		member,
-		guildId,
-	);
+		// Parse message element with Twemoji
+		const twemoji = window.twemoji;
+		twemoji.parse(messageElement, {
+			folder: 'svg',
+			ext: '.svg',
+		});
+	}, interaction);
 
 	// Wait for images to load
 	await page.waitForNetworkIdle();
