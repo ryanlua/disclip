@@ -53,15 +53,14 @@ async function generateMessageScreenshot(interaction, env) {
 			(interaction.member?.user?.id === message.author.id
 				? interaction.member
 				: undefined);
-		const guildId = interaction.guild_id;
 		const author = message.author;
 		const username = member?.nick || author.global_name || author.username;
 		const defaultUserAvatarIndex = author.discriminator
 			? Number(author.discriminator) % 5 // Legacy username system
 			: (BigInt(author.id) >> 22n) % 6n; // New username system
 		const userAvatar =
-			member?.avatar && guildId
-				? `https://cdn.discordapp.com/guilds/${guildId}/users/${author.id}/avatars/${member.avatar}.webp`
+			member?.avatar && interaction.guild_id
+				? `https://cdn.discordapp.com/guilds/${interaction.guild_id}/users/${author.id}/avatars/${member.avatar}.webp`
 				: author.avatar
 					? `https://cdn.discordapp.com/avatars/${author.id}/${author.avatar}.webp`
 					: `https://cdn.discordapp.com/embed/avatars/${defaultUserAvatarIndex}.png`;
