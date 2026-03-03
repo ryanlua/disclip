@@ -7,7 +7,7 @@ import {
 /**
  * Component for clipping a message.
  * @param {string} messageUrl - URL of the Discord message
- * @returns {import('discord-api-types/v10').RESTPostAPIWebhookWithTokenJSONBody}
+ * @returns {import('discord-api-types/v10').APIInteractionResponseCallbackData}
  */
 export const CLIP_COMPONENT = (messageUrl) => ({
 	flags: MessageFlags.IsComponentsV2,
