@@ -65,10 +65,10 @@ async function generateMessageScreenshot(interaction, env) {
 				: author.avatar
 					? `https://cdn.discordapp.com/avatars/${author.id}/${author.avatar}.webp`
 					: `https://cdn.discordapp.com/embed/avatars/${defaultUserAvatarIndex}.png`;
-		const effectiveAvatarDecoration =
+		const avatarDecorationData =
 			member?.avatar_decoration_data || author.avatar_decoration_data;
-		const avatarDecoration = effectiveAvatarDecoration
-			? `https://cdn.discordapp.com/avatar-decoration-presets/${effectiveAvatarDecoration.asset}.png?passthrough=false`
+		const avatarDecoration = avatarDecorationData
+			? `https://cdn.discordapp.com/avatar-decoration-presets/${avatarDecorationData.asset}.png?passthrough=false`
 			: '';
 		const serverTag = author.clan?.tag || '';
 		const serverTagBadge = author.clan
