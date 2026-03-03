@@ -150,6 +150,9 @@ async function generateMessageScreenshot(interaction, env) {
 
 	// All work done, so free connection (IMPORTANT!)
 
+	// Close the page to release resources before disconnecting
+	await page.close();
+
 	// Close browser immediately
 	// Reduces browser time, but increases new browser instances, and response time
 	// browser.close();
