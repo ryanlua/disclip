@@ -8,12 +8,12 @@ import style from '../public/style.css';
 import { CLIP_COMPONENT, ERROR_COMPONENT } from './components.js';
 
 /**
- * Generate a message screenshot from a Discord message.
- * @param {import('discord-api-types/v10').APIMessage} message - The Discord message object.
+ * Generate a message screenshot from a Discord interaction.
+ * @param {import('discord-api-types/v10').APIInteraction} interaction - The Discord interaction object.
  * @param {*} env - The environment variables.
  * @returns {Promise<Buffer>} - The screenshot image buffer.
  */
-async function generateMessageScreenshot(message, env) {
+async function generateMessageScreenshot(interaction, env) {
 	// Pick random session from open sessions
 	let sessionId = await getRandomSession(env.BROWSER);
 	let browser;
@@ -45,17 +45,29 @@ async function generateMessageScreenshot(message, env) {
 		url: 'https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js',
 	});
 
-	await page.evaluate((message) => {
+	await page.evaluate((interaction) => {
+		const targetId = interaction.data.target_id;
+		const message = interaction.data.resolved.messages[targetId];
+		const member =
+			interaction.data.resolved.members?.[message.author.id] ??
+			(interaction.member?.user?.id === message.author.id
+				? interaction.member
+				: undefined);
 		const author = message.author;
-		const username = author.global_name || author.username;
+		const username = member?.nick || author.global_name || author.username;
 		const defaultUserAvatarIndex = author.discriminator
 			? Number(author.discriminator) % 5 // Legacy username system
 			: (BigInt(author.id) >> 22n) % 6n; // New username system
-		const userAvatar = author.avatar
-			? `https://cdn.discordapp.com/avatars/${author.id}/${author.avatar}.webp`
-			: `https://cdn.discordapp.com/embed/avatars/${defaultUserAvatarIndex}.png`;
-		const avatarDecoration = author.avatar_decoration_data
-			? `https://cdn.discordapp.com/avatar-decoration-presets/${author.avatar_decoration_data.asset}.png?passthrough=false`
+		const userAvatar =
+			member?.avatar && interaction.guild_id
+				? `https://cdn.discordapp.com/guilds/${interaction.guild_id}/users/${author.id}/avatars/${member.avatar}.webp`
+				: author.avatar
+					? `https://cdn.discordapp.com/avatars/${author.id}/${author.avatar}.webp`
+					: `https://cdn.discordapp.com/embed/avatars/${defaultUserAvatarIndex}.png`;
+		const avatarDecorationData =
+			member?.avatar_decoration_data || author.avatar_decoration_data;
+		const avatarDecoration = avatarDecorationData
+			? `https://cdn.discordapp.com/avatar-decoration-presets/${avatarDecorationData.asset}.png?passthrough=false`
 			: '';
 		const serverTag = author.clan?.tag || '';
 		const serverTagBadge = author.clan
@@ -118,7 +130,7 @@ async function generateMessageScreenshot(message, env) {
 			folder: 'svg',
 			ext: '.svg',
 		});
-	}, message);
+	}, interaction);
 
 	// Wait for images to load
 	await page.waitForNetworkIdle();
@@ -178,7 +190,7 @@ export async function generateMessageClip(interaction, env) {
 	try {
 		const targetId = interaction.data.target_id;
 		const targetMessage = interaction.data.resolved.messages[targetId];
-		const image = await generateMessageScreenshot(targetMessage, env);
+		const image = await generateMessageScreenshot(interaction, env);
 		const messageUrl = `https://discord.com/channels/${interaction.guild_id || '@me'}/${targetMessage.channel_id}/${targetMessage.id}`;
 
 		msgJson = CLIP_COMPONENT(messageUrl);
