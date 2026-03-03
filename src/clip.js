@@ -28,7 +28,7 @@ async function generateMessageScreenshot(interaction, env) {
 	if (!browser) {
 		try {
 			// No open sessions, launch new session
-			browser = await puppeteer.launch(env.BROWSER);
+			browser = await puppeteer.launch(env.BROWSER, { keep_alive: 600000 });
 		} catch (browserError) {
 			console.error('Browser launch failed:', browserError);
 			throw browserError;
@@ -149,6 +149,13 @@ async function generateMessageScreenshot(interaction, env) {
 	});
 
 	// All work done, so free connection (IMPORTANT!)
+
+	// Close browser immediately
+	// Reduces browser time, but increases new browser instances, and response time
+	// browser.close();
+
+	// Disconnect to allow reuse of the session
+	// Reduces new browser instances and response time, but increases browser hours
 	browser.disconnect();
 
 	return screenshot;
