@@ -85,7 +85,10 @@ router.post('/interactions', async (request, env, ctx) => {
 				});
 			}
 			default:
-				return new JsonResponse({ error: 'Unknown Application Command' }, { status: 400 });
+				return new JsonResponse(
+					{ error: 'Unknown Application Command' },
+					{ status: 400 },
+				);
 		}
 	}
 
