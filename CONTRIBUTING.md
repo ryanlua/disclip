@@ -5,9 +5,9 @@
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https%3A%2F%2Fgithub.com%2Fryanlua%2Fdisclip)
 
 > [!TIP]
-> This guide is for developers who want to set up their own Disclip clone for development purposes. You can install official Disclip app using the [install link](https://discord.com/oauth2/authorize?client_id=621149242744111114).
+> This guide is for developers who want to set up their own Disclip clone for development purposes. You can install the official Disclip app using the [install link](https://discord.com/oauth2/authorize?client_id=621149242744111114).
 
-It is recommended you [make your first Discord app](https://discord.com/developers/docs/quick-start/getting-started) before you start setting up Disclip so you are familiar with the Discord Developer Portal and how to create an app.
+It is recommended you [make your first Discord app](https://docs.discord.com/developers/quick-start/getting-started) before you start setting up Disclip, so you are familiar with the Discord Developer Portal and how to create an app. Additionally, you can follow the [deploying Discord apps on Cloudflare Workers tutorial](https://docs.discord.com/developers/tutorials/hosting-on-cloudflare-workers) to get a better understanding of how hosting Discord apps on Cloudflare Workers works in general.
 
 This guide will walk you through the steps to create, configure, and deploy your own Disclip clone to [Cloudflare Workers](https://workers.cloudflare.com/).
 
