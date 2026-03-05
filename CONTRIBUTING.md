@@ -25,7 +25,7 @@ git clone https://github.com/ryanlua/disclip.git
 Navigate to the cloned directory and install dependencies:
 
 ```console
-cd Disclip
+cd disclip
 npm install
 ```
 
