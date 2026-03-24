@@ -18,6 +18,10 @@
 		}
 	],
 	"secrets": {
-		"required": ["DISCORD_APPLICATION_ID", "DISCORD_PUBLIC_KEY", "DISCORD_TOKEN"]
+		"required": [
+			"DISCORD_APPLICATION_ID",
+			"DISCORD_PUBLIC_KEY",
+			"DISCORD_TOKEN"
+		]
 	}
 }
