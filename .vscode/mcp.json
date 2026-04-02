@@ -3,6 +3,10 @@
 		"cloudflare-docs": {
 			"type": "http",
 			"url": "https://docs.mcp.cloudflare.com/mcp"
+		},
+		"discord-docs": {
+			"type": "http",
+			"url": "https://docs.discord.com/mcp"
 		}
 	},
 	"inputs": []
