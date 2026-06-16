@@ -33,6 +33,7 @@
 		"actions": {
 			"source": {
 				"organizeImports": "on",
+				"useSortedPackageJson": "on",
 				"useSortedProperties": "on"
 			}
 		}
