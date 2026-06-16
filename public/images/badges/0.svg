@@ -1,13 +1,22 @@
-<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
-	<path d="M30 4V2H18v2H6v10H2v10h24V14h4V4Z" fill="#BCEF42" />
-	<path d="M22 26v-2H10v2h12Z" fill="#7FB134" />
-	<path d="M30 4V2H18v2h12ZM18 6V4h-8v2h8Z" fill="#fff" />
-	<path d="M6 22v2h4v-2H6Zm20-2h-2v4h2v-4Zm4-10h-2v4h2v-4Zm-2 4h-2v6h2v-6Z" fill="#7FB134" />
-	<path d="M32 2h-2v12h2V2Z" fill="#000" />
-	<path d="M6 18H4v12h2V18Z" fill="#4A8359" />
-	<path d="M30 0H18v2h12V0Zm-8 26H10v2h12v-2ZM18 2h-8v2h8V2Zm-8 2H6v2h4V4ZM6 6H4v4h2V6Zm-4 8H0v10h2v6h2v-6H2V14h2v-4H2v4Zm24 10h-4v2h4v-2Zm2-4h-2v4h2v-4h2v-6h-2v6ZM8 26h2v-2H6v6h2v-4Zm-2 4H4v2h2v-2Z" fill="#000" />
-	<path d="M4 14h2v-4H4v4Zm-2 4h2v-4H2v4Zm8-12H6v4h2V8h2V6Z" fill="#fff" />
-	<path d="M8 16h4v-2H8v2Zm4-2h4v-2h-4v2Zm4-2h4v-2h-4v2Zm4-2h2V8h-2v2Zm2-2h2V6h-2v2Z" fill="#4A8359" />
-	<path d="M10 8v2h2V8h-2Z" fill="#fff" />
-	<path d="M6 16v2h2v-2H6Z" fill="#4A8359" />
+<svg height="32" width="32" xmlns="http://www.w3.org/2000/svg">
+	<title>Leaf badge</title>
+	<path d="M30 4V2H18v2H6v10H2v10h24V14h4z" fill="#bcef42" />
+	<path d="M22 26v-2H10v2z" fill="#7fb134" />
+	<path d="M30 4V2H18v2zM18 6V4h-8v2z" fill="#fff" />
+	<path
+		d="M6 22v2h4v-2zm20-2h-2v4h2zm4-10h-2v4h2zm-2 4h-2v6h2z"
+		fill="#7fb134"
+	/>
+	<path d="M32 2h-2v12h2z" />
+	<path d="M6 18H4v12h2z" fill="#4a8359" />
+	<path
+		d="M30 0H18v2h12zm-8 26H10v2h12zM18 2h-8v2h8zm-8 2H6v2h4zM6 6H4v4h2zm-4 8H0v10h2v6h2v-6H2zh2v-4H2zm24 10h-4v2h4zm2-4h-2v4h2zh2v-6h-2zM8 26h2v-2H6v6h2zm-2 4H4v2h2z"
+	/>
+	<path d="M4 14h2v-4H4zm-2 4h2v-4H2zm8-12H6v4h2V8h2z" fill="#fff" />
+	<path
+		d="M8 16h4v-2H8zm4-2h4v-2h-4zm4-2h4v-2h-4zm4-2h2V8h-2zm2-2h2V6h-2z"
+		fill="#4a8359"
+	/>
+	<path d="M10 8v2h2V8z" fill="#fff" />
+	<path d="M6 16v2h2v-2z" fill="#4a8359" />
 </svg>
