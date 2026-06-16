@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+<svg height="16" width="16" xmlns="http://www.w3.org/2000/svg">
 	<title>Verified App</title>
 	<path
-		fill="#fff"
 		d="M15 3a2 2 0 0 1 0 2l-8 8a2 2 0 0 1-2 0L1 9a2 2 0 0 1 2-2l3 3 7-7a2 2 0 0 1 2 0"
+		fill="#fff"
 	/>
 </svg>

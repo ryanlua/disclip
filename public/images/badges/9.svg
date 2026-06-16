@@ -1,25 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+<svg height="32" width="32" xmlns="http://www.w3.org/2000/svg">
 	<title>Toadstool badge</title>
-	<path fill="#ffe361" d="M22 24v-4h-2v-2h-8v2h-2v4H8v6h16v-6z" />
-	<path fill="#ff2c52" d="M28 6V4h-4V2H8v2H4v2H2v12h2v2h4v-2h16v2h4v-2h2V6z" />
+	<path d="M22 24v-4h-2v-2h-8v2h-2v4H8v6h16v-6z" fill="#ffe361" />
+	<path d="M28 6V4h-4V2H8v2H4v2H2v12h2v2h4v-2h16v2h4v-2h2V6z" fill="#ff2c52" />
 	<path d="M24 0H8v2h16z" />
-	<path fill="#fff" d="M24 2H8v2h16zM8 4H4v2h4zm20 0h-4v2h4z" />
+	<path d="M24 2H8v2h16zM8 4H4v2h4zm20 0h-4v2h4z" fill="#fff" />
 	<path d="M24 30H8v2h16zM2 6H0v12h2zm6-4H4v2h4z" />
-	<path fill="#fff" d="M4 14V6H2v12h4v-4z" />
-	<path fill="#be0351" d="M30 6h-2v12h2z" />
-	<path fill="#fff" d="M30 12h-4v4h4zm-6-8h-4v4h4z" />
-	<path fill="#be0351" d="M30 12h-2v4h2z" opacity=".5" />
-	<path fill="#be0351" d="M20 14h-8v2h8zm4 2h-4v2h4zm-12 0H8v2h4z" />
-	<path fill="#fff" d="M12 20h-2v4h2z" />
-	<path fill="#ffb84b" d="M22 20h-2v4h2zm0 4v4H8v2h16v-6z" />
-	<path fill="#fff" d="M10 24H8v4h2z" />
-	<path fill="#be0351" d="M8 18H4v2h4zm20 0h-4v2h4z" />
-	<path fill="#fff" d="M16 12h-4v4h4z" />
-	<path fill="#be0351" d="M16 14h-4v2h4z" opacity=".5" />
+	<path d="M4 14V6H2v12h4v-4z" fill="#fff" />
+	<path d="M30 6h-2v12h2z" fill="#be0351" />
+	<path d="M30 12h-4v4h4zm-6-8h-4v4h4z" fill="#fff" />
+	<path d="M30 12h-2v4h2z" fill="#be0351" opacity=".5" />
+	<path d="M20 14h-8v2h8zm4 2h-4v2h4zm-12 0H8v2h4z" fill="#be0351" />
+	<path d="M12 20h-2v4h2z" fill="#fff" />
+	<path d="M22 20h-2v4h2zm0 4v4H8v2h16v-6z" fill="#ffb84b" />
+	<path d="M10 24H8v4h2z" fill="#fff" />
+	<path d="M8 18H4v2h4zm20 0h-4v2h4z" fill="#be0351" />
+	<path d="M16 12h-4v4h4z" fill="#fff" />
+	<path d="M16 14h-4v2h4z" fill="#be0351" opacity=".5" />
 	<path d="M20 16h-8v2h8z" />
-	<path fill="#fff" d="M20 18h-8v2h8z" />
+	<path d="M20 18h-8v2h8z" fill="#fff" />
 	<path d="M4 4H2v2h2z" />
-	<path fill="#fff" d="M10 6H8v2h2z" />
+	<path d="M10 6H8v2h2z" fill="#fff" />
 	<path
 		d="M8 24H6v6h2zm2-4h2v-2H8v2H4v2h4v2h2zm-6-2H2v2h2zM32 6h-2v12h2zm-4-4h-4v2h4zm2 2h-2v2h2zm-2 16h-4v-2h-4v2h2v4h2v6h2v-6h-2v-2h4zh2v-2h-2z"
 	/>
