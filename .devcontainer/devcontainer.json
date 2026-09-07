@@ -1,5 +1,5 @@
 {
-	"image": "mcr.microsoft.com/devcontainers/javascript-node:4-22-bookworm",
+	"image": "mcr.microsoft.com/devcontainers/javascript-node:5-22-bookworm",
 	"forwardPorts": [8787],
 	"portsAttributes": {
 		"8787": {
