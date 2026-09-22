@@ -36,11 +36,11 @@
 		"@cloudflare/puppeteer": "^1.4.0",
 		"discord-api-types": "^0.38.55",
 		"discord-interactions": "^4.4.0",
-		"dotenv": "^18.0.1",
+		"dotenv": "^18.0.2",
 		"itty-router": "^5.0.24"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.5.14",
-		"wrangler": "^4.135.0"
+		"wrangler": "^4.136.1"
 	}
 }
