@@ -211,7 +211,7 @@ export async function generateMessageClip(interaction, env) {
 	} catch (error) {
 		console.error('Error generating message clip:', error);
 
-		msgJson = ERROR_COMPONENT(error.stack || 'Unknown error occurred');
+		msgJson = ERROR_COMPONENT('An unexpected error occurred while generating the clip. Please try again later.');
 
 		formData = new FormData();
 		formData.append('payload_json', JSON.stringify(msgJson));
