@@ -209,9 +209,10 @@ export async function generateMessageClip(interaction, env) {
 		formData.append('payload_json', JSON.stringify(msgJson));
 		formData.append('files[0]', new Blob([image]), 'clip.png');
 	} catch (error) {
-		console.error('Error generating message clip:', error);
+		const errorId = crypto.randomUUID();
+		console.error(`Error generating message clip [${errorId}]:`, error);
 
-		msgJson = ERROR_COMPONENT('An unexpected error occurred while generating the clip. Please try again later.');
+		msgJson = ERROR_COMPONENT(errorId);
 
 		formData = new FormData();
 		formData.append('payload_json', JSON.stringify(msgJson));
