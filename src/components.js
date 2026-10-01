@@ -42,10 +42,10 @@ export const CLIP_COMPONENT = (messageUrl) => ({
 
 /**
  * Component for displaying an error message.
- * @param {string} errorStacktrace - The error stacktrace to display
+ * @param {string} errorId - The error ID to display, for correlating with server-side logs
  * @returns {import('discord-api-types/v10').RESTPostAPIWebhookWithTokenJSONBody}
  */
-export const ERROR_COMPONENT = (errorStacktrace) => ({
+export const ERROR_COMPONENT = (errorId) => ({
 	flags: MessageFlags.IsComponentsV2,
 	components: [
 		{
@@ -53,7 +53,7 @@ export const ERROR_COMPONENT = (errorStacktrace) => ({
 			components: [
 				{
 					type: ComponentType.TextDisplay,
-					content: `## Error\n\nUnknown error occurred:\n\`\`\`\n${errorStacktrace}\n\`\`\``,
+					content: `## Error\n\nAn unexpected error occurred while generating the clip. Please try again later.\n\nIf this keeps happening, share this error ID in the support server: \`${errorId}\``,
 				},
 				{
 					type: ComponentType.ActionRow,
