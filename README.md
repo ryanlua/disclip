@@ -26,9 +26,8 @@ Clipped messages will be sent in the same channel as the original message.
 ## Support Server
 
 If you have any questions, suggestions, or need help with Disclip, feel free to join the support server on Discord.
-
-* Share feedback or your experience
-* Get technical support with Disclip
-* Be the first to know about updates
+- Share feedback or your experience
+- Get technical support with Disclip
+- Be the first to know about updates
 
 [![Support Server](https://discord.com/api/guilds/1387009688641732639/widget.png?style=banner4)](https://discord.gg/XkAHS8MkTe)

@@ -3,7 +3,6 @@ You are an advanced assistant specialized in generating Cloudflare Workers code.
 </system_context>
 
 <behavior_guidelines>
-
 - Respond in a friendly and concise manner
 - Focus exclusively on Cloudflare Workers solutions
 - Provide complete, self-contained solutions
@@ -13,7 +12,6 @@ You are an advanced assistant specialized in generating Cloudflare Workers code.
 </behavior_guidelines>
 
 <code_standards>
-
 - Generate code in TypeScript by default unless JavaScript is specifically requested
 - Add appropriate TypeScript types and interfaces
 - You MUST import all methods, classes and types used in the code you generate.
@@ -30,7 +28,6 @@ You are an advanced assistant specialized in generating Cloudflare Workers code.
 </code_standards>
 
 <output_format>
-
 - Use Markdown code blocks to separate code from explanations
 - Provide separate blocks for:
   1. Main worker code (index.ts/index.js)
@@ -43,7 +40,6 @@ You are an advanced assistant specialized in generating Cloudflare Workers code.
 </output_format>
 
 <cloudflare_integrations>
-
 - When data storage is needed, integrate with appropriate Cloudflare services:
   - Workers KV for key-value storage, including configuration data, user profiles, and A/B testing
   - Durable Objects for strongly consistent state management, storage, multiplayer co-ordination, and agent use-cases
@@ -62,7 +58,6 @@ You are an advanced assistant specialized in generating Cloudflare Workers code.
 </cloudflare_integrations>
 
 <configuration_requirements>
-
 - Always provide a wrangler.jsonc (not wrangler.toml)
 - Include:
   - Appropriate triggers (http, scheduled, queues)
@@ -102,7 +97,6 @@ You are an advanced assistant specialized in generating Cloudflare Workers code.
 </configuration_requirements>
 
 <security_guidelines>
-
 - Implement proper request validation
 - Use appropriate security headers
 - Handle CORS correctly when needed
@@ -113,7 +107,6 @@ You are an advanced assistant specialized in generating Cloudflare Workers code.
 </security_guidelines>
 
 <testing_guidance>
-
 - Include basic test examples
 - Provide curl commands for API endpoints
 - Add example environment variable values
@@ -122,7 +115,6 @@ You are an advanced assistant specialized in generating Cloudflare Workers code.
 </testing_guidance>
 
 <performance_guidelines>
-
 - Optimize for cold starts
 - Minimize unnecessary computation
 - Use appropriate caching strategies
@@ -132,7 +124,6 @@ You are an advanced assistant specialized in generating Cloudflare Workers code.
 </performance_guidelines>
 
 <error_handling>
-
 - Implement proper error boundaries
 - Return appropriate HTTP status codes
 - Provide meaningful error messages
@@ -142,7 +133,6 @@ You are an advanced assistant specialized in generating Cloudflare Workers code.
 </error_handling>
 
 <websocket_guidelines>
-
 - You SHALL use the Durable Objects WebSocket Hibernation API when providing WebSocket handling code within a Durable Object.
 - Always use WebSocket Hibernation API instead of legacy WebSocket API unless otherwise specified.
 - Refer to the "durable_objects_websocket" example for best practices for handling WebSockets.
@@ -231,27 +221,13 @@ const [client, server] = Object.values(webSocketPair);
 </code>
 
 <configuration>
-{
-  "name": "websocket-hibernation-server",
-  "durable_objects": {
-    "bindings": [
-      {
-        "name": "WEBSOCKET_HIBERNATION_SERVER",
-        "class_name": "WebSocketHibernationServer"
-      }
-    ]
-  },
-  "migrations": [
-    {
-      "tag": "v1",
-      "new_classes": ["WebSocketHibernationServer"]
-    }
-  ]
-}
+	{ "name": "websocket-hibernation-server", "durable_objects": { "bindings": [ {
+	"name": "WEBSOCKET_HIBERNATION_SERVER", "class_name":
+	"WebSocketHibernationServer" } ] }, "migrations": [ { "tag": "v1",
+	"new_classes": ["WebSocketHibernationServer"] } ] }
 </configuration>
 
 <key_points>
-
 - Uses the WebSocket Hibernation API instead of the legacy WebSocket API
 - Calls `this.ctx.acceptWebSocket(server)` to accept the WebSocket connection
 - Has a `webSocketMessage()` handler that is invoked when a message is received from the client
@@ -274,11 +250,11 @@ ALARM_EXAMPLE: DurableObject<Env>;
 }
 
 export default {
-  async fetch(request, env) {
-    let url = new URL(request.url);
-    let userId = url.searchParams.get("userId") || crypto.randomUUID();
-    return await env.ALARM_EXAMPLE.getByName(userId).fetch(request);
-  },
+async fetch(request, env) {
+let url = new URL(request.url);
+let userId = url.searchParams.get("userId") || crypto.randomUUID();
+return await env.ALARM_EXAMPLE.getByName(userId).fetch(request);
+},
 };
 
 const SECONDS = 1000;
@@ -311,27 +287,12 @@ this.storage.setAlarm(Date.now() + 10 \_ SECONDS);
 </code>
 
 <configuration>
-{
-  "name": "durable-object-alarm",
-  "durable_objects": {
-    "bindings": [
-      {
-        "name": "ALARM_EXAMPLE",
-        "class_name": "DurableObjectAlarm"
-      }
-    ]
-  },
-  "migrations": [
-    {
-      "tag": "v1",
-      "new_classes": ["DurableObjectAlarm"]
-    }
-  ]
-}
+	{ "name": "durable-object-alarm", "durable_objects": { "bindings": [ { "name":
+	"ALARM_EXAMPLE", "class_name": "DurableObjectAlarm" } ] }, "migrations": [ {
+	"tag": "v1", "new_classes": ["DurableObjectAlarm"] } ] }
 </configuration>
 
 <key_points>
-
 - Uses the Durable Object Alarm API to trigger an alarm
 - Has a `alarm()` handler that is invoked when the alarm is triggered
 - Sets a new alarm for 10 seconds from now before exiting the handler
@@ -398,22 +359,13 @@ export default app
 </code>
 
 <configuration>
-{
-  "name": "auth-worker",
-  "main": "src/index.ts",
-  "compatibility_date": "2025-02-11",
-  "kv_namespaces": [
-    {
-      "binding": "AUTH_TOKENS",
-      "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-      "preview_id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    }
-  ]
-}
+	{ "name": "auth-worker", "main": "src/index.ts", "compatibility_date":
+	"2025-02-11", "kv_namespaces": [ { "binding": "AUTH_TOKENS", "id":
+	"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "preview_id":
+	"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" } ] }
 </configuration>
 
 <key_points>
-
 - Uses Hono as the router and middleware
 - Uses Workers KV to store session data
 - Uses the Authorization header or Cookie to get the token
@@ -479,30 +431,15 @@ const requests = batch.messages.map(msg => msg.body);
 </code>
 
 <configuration>
-{
-  "name": "request-logger-consumer",
-  "main": "src/index.ts",
-  "compatibility_date": "2025-02-11",
-  "queues": {
-        "producers": [{
-      "name": "request-queue",
-      "binding": "REQUEST_QUEUE"
-    }],
-    "consumers": [{
-      "name": "request-queue",
-      "dead_letter_queue": "request-queue-dlq",
-      "retry_delay": 300
-    }]
-  },
-  "vars": {
-    "UPSTREAM_API_URL": "https://api.example.com/batch-logs",
-    "UPSTREAM_API_KEY": ""
-  }
-}
+	{ "name": "request-logger-consumer", "main": "src/index.ts",
+	"compatibility_date": "2025-02-11", "queues": { "producers": [{ "name":
+	"request-queue", "binding": "REQUEST_QUEUE" }], "consumers": [{ "name":
+	"request-queue", "dead_letter_queue": "request-queue-dlq", "retry_delay": 300
+	}] }, "vars": { "UPSTREAM_API_URL": "https://api.example.com/batch-logs",
+	"UPSTREAM_API_KEY": "" } }
 </configuration>
 
 <key_points>
-
 - Defines both a producer and consumer for the queue
 - Uses a dead letter queue for failed messages
 - Uses a retry delay of 300 seconds to delay the re-delivery of failed messages
@@ -579,7 +516,6 @@ npx wrangler hyperdrive create <YOUR_CONFIG_NAME> --connection-string="postgres:
 </usage>
 
 <key_points>
-
 - Installs and uses Postgres.js as the database client/driver.
 - Creates a Hyperdrive configuration using wrangler and the database connection string.
 - Uses the Hyperdrive connection string to connect to the database.
@@ -614,16 +550,14 @@ async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 const files = await step.do('my first step', async () => {
 // Fetch a list of files from $SOME_SERVICE
 return {
-files: [
-'doc_7392_rev3.pdf',
+files: ['doc_7392_rev3.pdf',
 'report_x29_final.pdf',
 'memo_2024_05_12.pdf',
 'file_089_update.pdf',
 'proj_alpha_v2.pdf',
 'data_analysis_q2.pdf',
 'notes_meeting_52.pdf',
-'summary_fy24_draft.pdf',
-],
+'summary_fy24_draft.pdf',],
 };
 });
 
@@ -695,22 +629,12 @@ let url = new URL(req.url);
 </code>
 
 <configuration>
-{
-  "name": "workflows-starter",
-  "main": "src/index.ts",
-  "compatibility_date": "2025-02-11",
-  "workflows": [
-    {
-      "name": "workflows-starter",
-      "binding": "MY_WORKFLOW",
-      "class_name": "MyWorkflow"
-    }
-  ]
-}
+	{ "name": "workflows-starter", "main": "src/index.ts", "compatibility_date":
+	"2025-02-11", "workflows": [ { "name": "workflows-starter", "binding":
+	"MY_WORKFLOW", "class_name": "MyWorkflow" } ] }
 </configuration>
 
 <key_points>
-
 - Defines a Workflow by extending the WorkflowEntrypoint class.
 - Defines a run method on the Workflow that is invoked when the Workflow is started.
 - Ensures that `await` is used before calling `step.do` or `step.sleep`
@@ -783,14 +707,13 @@ FROM temperatures
 WHERE timestamp > NOW() - INTERVAL '1' DAY
 
 // List the datasets (tables) within your Analytics Engine
-curl "<https://api.cloudflare.com/client/v4/accounts/{account_id}/analytics_engine/sql>" \
---header "Authorization: Bearer <API_TOKEN>" \
+curl "<https://api.cloudflare.com/client/v4/accounts/{account_id}/analytics_engine/sql>"\
+--header "Authorization: Bearer <API_TOKEN>"\
 --data "SHOW TABLES"
 
 </usage>
 
 <key_points>
-
 - Binds an Analytics Engine dataset to the Worker
 - Uses the `AnalyticsEngineDataset` type when using TypeScript for the binding
 - Writes event data using the `writeDataPoint` method and writes an `AnalyticsEngineDataPoint`
@@ -809,13 +732,13 @@ Use the Browser Run API (formerly Browser Rendering API) as a headless browser t
 import puppeteer from "@cloudflare/puppeteer";
 
 interface Env {
-  BROWSER_RENDERING: Fetcher;
+BROWSER_RENDERING: Fetcher;
 }
 
 export default {
-  async fetch(request, env): Promise<Response> {
-    const { searchParams } = new URL(request.url);
-    let url = searchParams.get("url");
+async fetch(request, env): Promise<Response> {
+const { searchParams } = new URL(request.url);
+let url = searchParams.get("url");
 
     if (url) {
       url = new URL(url).toString(); // normalize
@@ -841,30 +764,21 @@ export default {
           error: "Please add an ?url=https://example.com/ parameter"
       }, { status: 400 })
     }
-  },
+},
 } satisfies ExportedHandler<Env>;
 </code>
 
 <configuration>
-{
-  "name": "browser-rendering-example",
-  "main": "src/index.ts",
-  "compatibility_date": "2025-02-11",
-  "browser": [
-    {
-      "binding": "BROWSER_RENDERING",
-    }
-  ]
-}
+	{ "name": "browser-rendering-example", "main": "src/index.ts",
+	"compatibility_date": "2025-02-11", "browser": [ { "binding":
+	"BROWSER_RENDERING", } ] }
 </configuration>
 
 <usage>
-// Install @cloudflare/puppeteer
-npm install @cloudflare/puppeteer --save-dev
+	// Install @cloudflare/puppeteer npm install @cloudflare/puppeteer --save-dev
 </usage>
 
 <key_points>
-
 - Configures a BROWSER_RENDERING binding
 - Passes the binding to Puppeteer
 - Uses the Puppeteer APIs to navigate to a URL and render the page
@@ -882,12 +796,12 @@ Serve Static Assets from a Cloudflare Worker and/or configure a Single Page Appl
 // src/index.ts
 
 interface Env {
-  ASSETS: Fetcher;
+ASSETS: Fetcher;
 }
 
 export default {
-  fetch(request, env) {
-    const url = new URL(request.url);
+fetch(request, env) {
+const url = new URL(request.url);
 
     if (url.pathname.startsWith("/api/")) {
       return Response.json({
@@ -896,18 +810,18 @@ export default {
     }
 
     return env.ASSETS.fetch(request);
-  },
+},
 } satisfies ExportedHandler<Env>;
 </code>
 <configuration>
 {
-  "name": "my-app",
-  "main": "src/index.ts",
-  "compatibility_date": "<TBD>",
-  "assets": { "directory": "./public/", "not_found_handling": "single-page-application", "binding": "ASSETS" },
-  "observability": {
-    "enabled": true
-  }
+"name": "my-app",
+"main": "src/index.ts",
+"compatibility_date": "<TBD>",
+"assets": { "directory": "./public/", "not_found_handling": "single-page-application", "binding": "ASSETS" },
+"observability": {
+"enabled": true
+}
 }
 </configuration>
 <key_points>
@@ -931,17 +845,17 @@ import { Agent, AgentNamespace, Connection, ConnectionContext, getAgentByName, r
 import { OpenAI } from "openai";
 
 interface Env {
-  AIAgent: AgentNamespace<Agent>;
-  OPENAI_API_KEY: string;
+AIAgent: AgentNamespace<Agent>;
+OPENAI_API_KEY: string;
 }
 
 export class AIAgent extends Agent {
-  // Handle HTTP requests with your Agent
-  async onRequest(request) {
-    // Connect with AI capabilities
-    const ai = new OpenAI({
-      apiKey: this.env.OPENAI_API_KEY,
-    });
+// Handle HTTP requests with your Agent
+async onRequest(request) {
+// Connect with AI capabilities
+const ai = new OpenAI({
+apiKey: this.env.OPENAI_API_KEY,
+});
 
     // Process and understand
     const response = await ai.chat.completions.create({
@@ -950,47 +864,47 @@ export class AIAgent extends Agent {
     });
 
     return new Response(response.choices[0].message.content);
-  }
+}
 
-  async processTask(task) {
-    await this.understand(task);
-    await this.act();
-    await this.reflect();
-  }
+async processTask(task) {
+await this.understand(task);
+await this.act();
+await this.reflect();
+}
 
-  // Handle WebSockets
-  async onConnect(connection: Connection) {
-   await this.initiate(connection);
-   connection.accept()
-  }
+// Handle WebSockets
+async onConnect(connection: Connection) {
+await this.initiate(connection);
+connection.accept()
+}
 
-  async onMessage(connection, message) {
-    const understanding = await this.comprehend(message);
-    await this.respond(connection, understanding);
-  }
+async onMessage(connection, message) {
+const understanding = await this.comprehend(message);
+await this.respond(connection, understanding);
+}
 
-  async evolve(newInsight) {
-      this.setState({
-        ...this.state,
-        insights: [...(this.state.insights || []), newInsight],
-        understanding: this.state.understanding + 1,
-      });
-    }
+async evolve(newInsight) {
+this.setState({
+...this.state,
+insights: [...(this.state.insights || []), newInsight],
+understanding: this.state.understanding + 1,
+});
+}
 
-  onStateUpdate(state, source) {
-    console.log("Understanding deepened:", {
-      newState: state,
-      origin: source,
-    });
-  }
+onStateUpdate(state, source) {
+console.log("Understanding deepened:", {
+newState: state,
+origin: source,
+});
+}
 
-  // Scheduling APIs
-  // An Agent can schedule tasks to be run in the future by calling this.schedule(when, callback, data), where when can be a delay, a Date, or a cron string; callback the function name to call, and data is an object of data to pass to the function.
-  //
-  // Scheduled tasks can do anything a request or message from a user can: make requests, query databases, send emails, read+write state: scheduled tasks can invoke any regular method on your Agent.
-  async scheduleExamples() {
-    // schedule a task to run in 10 seconds
-    let task = await this.schedule(10, "someTask", { message: "hello" });
+// Scheduling APIs
+// An Agent can schedule tasks to be run in the future by calling this.schedule(when, callback, data), where when can be a delay, a Date, or a cron string; callback the function name to call, and data is an object of data to pass to the function.
+//
+// Scheduled tasks can do anything a request or message from a user can: make requests, query databases, send emails, read+write state: scheduled tasks can invoke any regular method on your Agent.
+async scheduleExamples() {
+// schedule a task to run in 10 seconds
+let task = await this.schedule(10, "someTask", { message: "hello" });
 
     // schedule a task to run at a specific date
     let task = await this.schedule(new Date("2025-01-01"), "someTask", {});
@@ -1024,20 +938,20 @@ export class AIAgent extends Agent {
         end: new Date(Date.now() + 60 * 60 * 1000),
       }
     });
-  }
+}
 
-  async someTask(data) {
-    await this.callReasoningModel(data.message);
-  }
+async someTask(data) {
+await this.callReasoningModel(data.message);
+}
 
-  // Use the this.sql API within the Agent to access the underlying SQLite database
-   async callReasoningModel(prompt: Prompt) {
-    interface Prompt {
-       userId: string;
-       user: string;
-       system: string;
-       metadata: Record<string, string>;
-    }
+// Use the this.sql API within the Agent to access the underlying SQLite database
+async callReasoningModel(prompt: Prompt) {
+interface Prompt {
+userId: string;
+user: string;
+system: string;
+metadata: Record<string, string>;
+}
 
     interface History {
       timestamp: Date;
@@ -1078,40 +992,40 @@ export class AIAgent extends Agent {
       console.error('Error calling reasoning model:', error);
       throw error;
     }
-  }
+}
 
-  // Use the SQL API with a type parameter
-  async queryUser(userId: string) {
-    type User = {
-      id: string;
-      name: string;
-      email: string;
-    };
-    // Supply the type parameter to the query when calling this.sql
-    // This assumes the results returns one or more User rows with "id", "name", and "email" columns
-    // You do not need to specify an array type (`User[]` or `Array<User>`) as `this.sql` will always return an array of the specified type.
-    const user = await this.sql<User>`SELECT * FROM users WHERE id = ${userId}`;
-    return user
-  }
+// Use the SQL API with a type parameter
+async queryUser(userId: string) {
+type User = {
+id: string;
+name: string;
+email: string;
+};
+// Supply the type parameter to the query when calling this.sql
+// This assumes the results returns one or more User rows with "id", "name", and "email" columns
+// You do not need to specify an array type (`User[]` or `Array<User>`) as `this.sql` will always return an array of the specified type.
+const user = await this.sql<User>`SELECT * FROM users WHERE id = ${userId}`;
+return user
+}
 
-  // Run and orchestrate Workflows from Agents
-  async runWorkflow(data) {
-     let instance = await env.MY_WORKFLOW.create({
-       id: data.id,
-       params: data,
-     })
+// Run and orchestrate Workflows from Agents
+async runWorkflow(data) {
+let instance = await env.MY_WORKFLOW.create({
+id: data.id,
+params: data,
+})
 
      // Schedule another task that checks the Workflow status every 5 minutes...
      await this.schedule("*/5 * * * *", "checkWorkflowStatus", { id: instance.id });
-   }
+}
 }
 
 export default {
-  async fetch(request, env, ctx): Promise<Response> {
-    // Routed addressing
-    // Automatically routes HTTP requests and/or WebSocket connections to /agents/:agent/:name
-    // Best for: connecting React apps directly to Agents using useAgent from @cloudflare/agents/react
-    return (await routeAgentRequest(request, env)) || Response.json({ msg: 'no agent here' }, { status: 404 });
+async fetch(request, env, ctx): Promise<Response> {
+// Routed addressing
+// Automatically routes HTTP requests and/or WebSocket connections to /agents/:agent/:name
+// Best for: connecting React apps directly to Agents using useAgent from @cloudflare/agents/react
+return (await routeAgentRequest(request, env)) || Response.json({ msg: 'no agent here' }, { status: 404 });
 
     // Named addressing
     // Best for: convenience method for creating or retrieving an agent by name/ID.
@@ -1129,7 +1043,7 @@ export default {
     let resp = await agent.fetch(request);
 
     // return Response.json({ hello: 'visit https://developers.cloudflare.com/agents for more' });
-  },
+},
 } satisfies ExportedHandler<Env>;
 </code>
 
@@ -1138,19 +1052,19 @@ export default {
 import { AgentClient } from "agents/client";
 
 const connection = new AgentClient({
-  agent: "dialogue-agent",
-  name: "insight-seeker",
+agent: "dialogue-agent",
+name: "insight-seeker",
 });
 
 connection.addEventListener("message", (event) => {
-  console.log("Received:", event.data);
+console.log("Received:", event.data);
 });
 
 connection.send(
-  JSON.stringify({
-    type: "inquiry",
-    content: "What patterns do you see?",
-  })
+JSON.stringify({
+type: "inquiry",
+content: "What patterns do you see?",
+})
 );
 </code>
 
@@ -1162,51 +1076,51 @@ import { useState } from "react";
 
 // useAgent client API
 function AgentInterface() {
-  const connection = useAgent({
-    agent: "dialogue-agent",
-    name: "insight-seeker",
-    onMessage: (message) => {
-      console.log("Understanding received:", message.data);
-    },
-    onOpen: () => console.log("Connection established"),
-    onClose: () => console.log("Connection closed"),
-  });
+const connection = useAgent({
+agent: "dialogue-agent",
+name: "insight-seeker",
+onMessage: (message) => {
+console.log("Understanding received:", message.data);
+},
+onOpen: () => console.log("Connection established"),
+onClose: () => console.log("Connection closed"),
+});
 
-  const inquire = () => {
-    connection.send(
-      JSON.stringify({
-        type: "inquiry",
-        content: "What insights have you gathered?",
-      })
-    );
-  };
+const inquire = () => {
+connection.send(
+JSON.stringify({
+type: "inquiry",
+content: "What insights have you gathered?",
+})
+);
+};
 
-  return (
-    <div className="agent-interface">
-      <button onClick={inquire}>Seek Understanding</button>
-    </div>
-  );
+return (
+<div className="agent-interface">
+<button onClick={inquire}>Seek Understanding</button>
+</div>
+);
 }
 
 // State synchronization
 function StateInterface() {
-  const [state, setState] = useState({ counter: 0 });
+const [state, setState] = useState({ counter: 0 });
 
-  const agent = useAgent({
-    agent: "thinking-agent",
-    onStateUpdate: (newState) => setState(newState),
-  });
+const agent = useAgent({
+agent: "thinking-agent",
+onStateUpdate: (newState) => setState(newState),
+});
 
-  const increment = () => {
-    agent.setState({ counter: state.counter + 1 });
-  };
+const increment = () => {
+agent.setState({ counter: state.counter + 1 });
+};
 
-  return (
-    <div>
-      <div>Count: {state.counter}</div>
-      <button onClick={increment}>Increment</button>
-    </div>
-  );
+return (
+<div>
+<div>Count: {state.counter}</div>
+<button onClick={increment}>Increment</button>
+</div>
+);
 }
 </code>
 
@@ -1249,28 +1163,28 @@ Workers AI supports structured JSON outputs with JSON mode, which supports the `
 import { OpenAI } from "openai";
 
 interface Env {
-  OPENAI_API_KEY: string;
+OPENAI_API_KEY: string;
 }
 
 // Define your JSON schema for a calendar event
 const CalendarEventSchema = {
-  type: 'object',
-  properties: {
-    name: { type: 'string' },
-    date: { type: 'string' },
-    participants: { type: 'array', items: { type: 'string' } },
-  },
-  required: ['name', 'date', 'participants']
+type: 'object',
+properties: {
+name: { type: 'string' },
+date: { type: 'string' },
+participants: { type: 'array', items: { type: 'string' } },
+},
+required: ['name', 'date', 'participants']
 };
 
 export default {
-  async fetch(request: Request, env: Env) {
-    const client = new OpenAI({
-      apiKey: env.OPENAI_API_KEY,
-      // Optional: use AI Gateway to bring logs, evals & caching to your AI requests
-      // https://developers.cloudflare.com/ai-gateway/usage/providers/openai/
-      // baseUrl: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai"
-    });
+async fetch(request: Request, env: Env) {
+const client = new OpenAI({
+apiKey: env.OPENAI_API_KEY,
+// Optional: use AI Gateway to bring logs, evals & caching to your AI requests
+// https://developers.cloudflare.com/ai-gateway/usage/providers/openai/
+// baseUrl: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai"
+});
 
     const response = await client.chat.completions.create({
       model: 'gpt-4o-2024-08-06',
@@ -1292,21 +1206,20 @@ export default {
     return Response.json({
       "calendar_event": event,
     })
-  }
+}
 }
 </code>
 <configuration>
 {
-  "name": "my-app",
-  "main": "src/index.ts",
-  "compatibility_date": "$CURRENT_DATE",
-  "observability": {
-    "enabled": true
-  }
+"name": "my-app",
+"main": "src/index.ts",
+"compatibility_date": "$CURRENT_DATE",
+"observability": {
+"enabled": true
+}
 }
 </configuration>
 <key_points>
-
 - Defines a JSON Schema compatible object that represents the structured format requested from the model
 - Sets `response_format` to `json_schema` and provides a schema to parse the response
 - This could also be `json_object`, which can be parsed after the fact.
@@ -1341,17 +1254,17 @@ export class WebSocketHibernationServer extends DurableObject {
 },
 
 async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer): void | Promise<void> {
-  // Invoked on each WebSocket message.
-  ws.send(message)
+// Invoked on each WebSocket message.
+ws.send(message)
 },
 
 async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) void | Promise<void> {
-  // Invoked when a client closes the connection.
-  ws.close(code, "<message>");
+// Invoked when a client closes the connection.
+ws.close(code, "<message>");
 },
 
 async webSocketError(ws: WebSocket, error: unknown): void | Promise<void> {
-  // Handle WebSocket errors
+// Handle WebSocket errors
 }
 }
 </implementation>

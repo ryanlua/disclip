@@ -15,7 +15,6 @@ Disclip is a Discord application that allows users to create high-quality images
 ## 3. User Conduct
 
 You agree to use the Service responsibly and in compliance with:
-
 - Discord's Terms of Service and Community Guidelines
 - All applicable laws and regulations
 - These Terms of Service
@@ -23,7 +22,6 @@ You agree to use the Service responsibly and in compliance with:
 ### 3.1 Prohibited Uses
 
 You may not use the Service to:
-
 - Create images of messages without proper authorization from message authors
 - Share or distribute content that violates Discord's Community Guidelines
 - Attempt to reverse engineer, modify, or interfere with the Service
