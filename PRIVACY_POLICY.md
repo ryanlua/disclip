@@ -13,7 +13,6 @@ This Privacy Policy explains how Disclip ("we," "our," or "the Service") collect
 ### 2.1 Discord Message Data
 
 When you use Disclip to create message images, we temporarily process:
-
 - Message content and metadata
 - User display names and avatars
 - Server information (when applicable)
@@ -22,7 +21,6 @@ When you use Disclip to create message images, we temporarily process:
 ### 2.2 Usage Information
 
 We may collect:
-
 - Discord user IDs for command interactions
 - Server IDs where the bot is used
 - Basic usage analytics and error logs
@@ -30,7 +28,6 @@ We may collect:
 ## 3. How We Use Information
 
 We use the collected information to:
-
 - Generate message screenshot images
 - Provide and improve the Service
 - Debug and fix technical issues
@@ -53,7 +50,6 @@ The Service runs on Cloudflare Workers, which may temporarily cache data accordi
 ## 5. Data Sharing
 
 We do not sell, trade, or share your personal information with third parties, except:
-
 - As required by law or legal process
 - To protect our rights and the safety of users
 - With service providers necessary for Service operation (e.g., Cloudflare)
@@ -69,7 +65,6 @@ We implement appropriate security measures to protect against unauthorized acces
 ## 8. User Rights
 
 You have the right to:
-
 - Stop using the Service at any time
 - Remove the bot from your servers
 - Contact us with privacy-related questions
@@ -93,6 +88,5 @@ If you have questions about this Privacy Policy, please contact us through our [
 ## 13. Third-Party Services
 
 The Service integrates with:
-
 - **Discord:** Subject to [Discord's Privacy Policy](https://discord.com/privacy)
 - **Cloudflare Workers:** Subject to [Cloudflare's Privacy Policy](https://www.cloudflare.com/privacypolicy/)

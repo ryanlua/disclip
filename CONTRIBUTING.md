@@ -38,16 +38,15 @@ After you create your app, you'll land on the **General Information** page of th
 In your code editor, duplicate `.example.dev.vars` and rename it to `.dev.vars` in the root of the project directory.
 
 On your Discord app's settings, enter your app credentials in `.dev.vars`:
-
-* On the **General Information** page, copy the value for **Application ID**. In `.dev.vars`, enter your pasted value in `DISCORD_APPLICATION_ID`
+- On the **General Information** page, copy the value for **Application ID**. In `.dev.vars`, enter your pasted value in `DISCORD_APPLICATION_ID`
 
   ![Application ID on General Information page in App Settings](assets/application-id.png)
 
-* Back on the **General Information** page, copy the value for **Public Key**. In `.dev.vars`, enter your pasted value in `DISCORD_PUBLIC_KEY`
+- Back on the **General Information** page, copy the value for **Public Key**. In `.dev.vars`, enter your pasted value in `DISCORD_PUBLIC_KEY`
 
   ![Public Key on General Information page in App Settings](assets/public-key.png)
 
-* On the **Bot** page under **Token**, click "Reset Token" to generate a new bot token. In `.dev.vars`, enter your pasted value in `DISCORD_TOKEN`
+- On the **Bot** page under **Token**, click "Reset Token" to generate a new bot token. In `.dev.vars`, enter your pasted value in `DISCORD_TOKEN`
 
   ![Token on Bot page in App Settings](assets/token.png)
 
@@ -83,9 +82,8 @@ When **Discord Provided Link** is selected, a new **Default Install Settings** s
 #### Scopes and Bot Permissions
 
 On the **Installation** page in the **Default Install Settings** section:
-
-* For **User Install**, add the `applications.commands` scope
-* For **Guild Install**, add the `applications.commands` scope
+- For **User Install**, add the `applications.commands` scope
+- For **Guild Install**, add the `applications.commands` scope
 
 ![Default Install Settings on Installation page in App Settings](assets/default-install-settings.png)
 
