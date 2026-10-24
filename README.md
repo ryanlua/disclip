@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/ryanlua/disclip/actions/workflows/ci.yml/badge.svg)](https://github.com/ryanlua/disclip/actions/workflows/ci.yml)
 [![Discord](https://discord.com/api/guilds/1387009688641732639/widget.png)](https://discord.gg/XkAHS8MkTe)
-[![GitHub License](https://img.shields.io/github/license/ryanlua/disclip)](https://github.com/ryanlua/disclip?tab=MIT-1-ov-file#readme)
+[![GitHub License](https://img.shields.io/github/license/ryanlua/disclip)](LICENSE.md)
 [![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev)
 
 Save precious messages and funny moments with Disclip. Turn any Discord message into a high-quality image to share across friends and social media.
