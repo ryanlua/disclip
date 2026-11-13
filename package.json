@@ -40,7 +40,7 @@
 		"itty-router": "^5.0.24"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.6.4",
+		"@biomejs/biome": "2.6.7",
 		"wrangler": "^4.144.0"
 	}
 }
