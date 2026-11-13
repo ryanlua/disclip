@@ -38,6 +38,7 @@ After you create your app, you'll land on the **General Information** page of th
 In your code editor, duplicate `.example.dev.vars` and rename it to `.dev.vars` in the root of the project directory.
 
 On your Discord app's settings, enter your app credentials in `.dev.vars`:
+
 - On the **General Information** page, copy the value for **Application ID**. In `.dev.vars`, enter your pasted value in `DISCORD_APPLICATION_ID`
 
   ![Application ID on General Information page in App Settings](assets/application-id.png)
@@ -82,6 +83,7 @@ When **Discord Provided Link** is selected, a new **Default Install Settings** s
 #### Scopes and Bot Permissions
 
 On the **Installation** page in the **Default Install Settings** section:
+
 - For **User Install**, add the `applications.commands` scope
 - For **Guild Install**, add the `applications.commands` scope
 
